@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>eSports Section</title>
+  <style>
+    /* General Styling */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #121530;
+      color: #fff;
+    }
+
+    a {
+      text-decoration: none;
+      color: #ffd700;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      text-align: center;
+      padding: 50px 20px;
+      color: #fff;
+    }
+
+    .hero-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      filter: brightness(0.5);
+    }
+
+    .cta-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #ffd700;
+      color: #121530;
+      border-radius: 5px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    /* Match Highlights */
+    .match-highlights {
+      text-align: center;
+      padding: 40px 20px;
+      background: #1a1a2e;
+    }
+
+    .match-highlights h2 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+    }
+
+    .carousel {
+      display: flex;
+      overflow-x: auto;
+      gap: 20px;
+      padding: 10px;
+      scroll-behavior: smooth;
+    }
+
+    .carousel-item {
+      flex: 0 0 300px;
+      background: #0a0f2d;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .carousel-item video {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .carousel-item p {
+      margin-top: 10px;
+      font-size: 1rem;
+      color: #ffd700;
+    }
+
+    /* Carousel Buttons */
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #ffd700;
+      color: #000;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      z-index: 10;
+    }
+
+    #prev {
+      left: 20px;
+    }
+
+    #next {
+      right: 20px;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #0a0f2d;
+    }
+
+    .theme-toggle {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div>
+      <h1>Welcome to the eSports Arena</h1>
+      <p>Compete. Dominate. Win Big.</p>
+      <a href="#tournaments" class="cta-btn">Join the Battle</a>
+    </div>
+    <video autoplay muted loop class="hero-video">
+      <source src="https://www.videvo.net/videvo_files/converted/2020_10/preview/200930_04_FuturisticHUD_4k_029.mp491530.mp4" type="video/mp4">
+    </video>
+  </section>
+
+  <!-- Match Highlights Section -->
+  <section class="match-highlights">
+    <h2>Match Highlights</h2>
+    <div class="carousel" id="highlight-carousel">
+      <!-- Videos will be dynamically added here -->
+    </div>
+    <button id="prev" class="carousel-btn">&lt;</button>
+    <button id="next" class="carousel-btn">&gt;</button>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="theme-toggle">
+      <button id="toggle-theme">Switch to Dark Mode</button>
+    </div>
+    &copy; 2025 SuperHorizon.Studios | All Rights Reserved
+  </footer>
+
+  <script>
+    // Match Highlights Carousel
+    const videos = [
+      {
+        src: "https://www.videvo.net/videvo_files/converted/2017_08/preview/170816_HUD_01_1080p.mp4",
+        description: "Epic Play from Tournament A",
+      },
+      {
+        src: "https://www.videvo.net/videvo_files/converted/2018_08/preview/180809_FuturisticHUD_05_1080p.mp4",
+        description: "Final Moments of Tournament B",
+      },
+      {
+        src: "https://www.videvo.net/videvo_files/converted/2019_10/preview/191018_HUD_02_1080p.mp4",
+        description: "Unbelievable Comeback by Team X",
+      },
+    ];
+
+    const carousel = document.getElementById("highlight-carousel");
+
+    // Dynamically load videos into the carousel
+    videos.forEach((video) => {
+      const videoItem = document.createElement("div");
+      videoItem.className = "carousel-item";
+      videoItem.innerHTML = `
+        <video controls>
+          <source src="${video.src}" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <p>${video.description}</p>
+      `;
+      carousel.appendChild(videoItem);
+    });
+
+    // Carousel Navigation
+    const prev = document.getElementById("prev");
+    const next = document.getElementById("next");
+
+    prev.addEventListener("click", () => {
+      carousel.scrollBy({ left: -320, behavior: "smooth" });
+    });
+
+    next.addEventListener("click", () => {
+      carousel.scrollBy({ left: 320, behavior: "smooth" });
+    });
+
+    // Auto-scroll functionality
+    let isScrolling = false;
+
+    const autoScroll = () => {
+      if (!isScrolling) {
+        carousel.scrollBy({ left: 320, behavior: "smooth" });
+        if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth) {
+          carousel.scrollTo({ left: 0, behavior: "smooth" });
+        }
+      }
+    };
+
+    setInterval(autoScroll, 4000);
+
+    carousel.addEventListener("mousedown", () => (isScrolling = true));
+    carousel.addEventListener("mouseup", () => (isScrolling = false));
+    carousel.addEventListener("mouseleave", () => (isScrolling = false));
+  </script>
+</body>
+</html>
